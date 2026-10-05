@@ -261,9 +261,9 @@ check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
 check "Banner ASCII frame" grep -Fq "+------------------------------------------------------------------+" scripts/xlfr4n-banner
 check "Banner animation" grep -Fq '"BOOT" "LINK" "SYNC" "DRAW" "READY"' scripts/xlfr4n-banner
 check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
-check "Pulse animation reads theme" grep -Fq "theme-state/current" scripts/xlfr4n-pulse
-check "Pulse animation keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
-check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
+check "Identity helper reads theme" grep -Fq "theme-state/current" scripts/xlfr4n-pulse
+check "Identity helper keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
+check_not_present "Identity helper has no legacy KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
 check "Identity pulse static" grep -Fq "Static identity helper" scripts/xlfr4n-pulse
 check_not_present "Right KALI telemetry disabled" grep -Fq "modules-right = .*telemetry" config/polybar/config.ini
 check_not_present "APPS animation disabled" grep -Fq "launcher-pulse" config/polybar/config.ini
