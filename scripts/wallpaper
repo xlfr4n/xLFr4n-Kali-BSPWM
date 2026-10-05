@@ -1,43 +1,44 @@
 #!/usr/bin/env bash
-# ⚡ xlfr4n // Kali BSPWM 2026
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Full-bleed wallpaper layer. No artificial top/bottom black frame.
 set -Eeuo pipefail
 
 STATE_DIR="$HOME/.config/wallpaper-state"
 STATE_FILE="$STATE_DIR/current"
 INDEX_FILE="$HOME/.cache/xlfr4n/wallpapers.index"
 INDEX_TTL_MINUTES=360
-FRAME_VERSION="red-sticker-safe-zones-v2"
-FRAME_TOP_PERCENT=4
-FRAME_BOTTOM_PERCENT=8
-DEFAULT_WALLPAPER="${XLFR4N_DEFAULT_WALLPAPER:-/usr/share/wallpapers/KaliRedSticker/contents/images/3840x2160.jpg}"
-mkdir -p "$STATE_DIR"
+DEFAULT_WALLPAPER="${XLFR4N_DEFAULT_WALLPAPER:-/usr/share/backgrounds/kali/kali-hack-16x9.jpg}"
 
-declare -a ROOTS=(
-  "$HOME/.local/share/backgrounds"
-  "$HOME/Pictures/Wallpapers"
-  "/usr/share/backgrounds/kali"
-  "/usr/share/backgrounds"
-  "/usr/share/wallpapers"
-)
+mkdir -p "$STATE_DIR" "$(dirname "$INDEX_FILE")"
 
 collect() {
-  local root
-  local tmp_index
-
-  mkdir -p "$(dirname "$INDEX_FILE")"
+  local root tmp_index
 
   if [ "${XLFR4N_WALLPAPER_REINDEX:-0}" != "1" ] &&
      [ -s "$INDEX_FILE" ] &&
-     find "$INDEX_FILE" -mmin "-$INDEX_TTL_MINUTES" -print -quit 2>/dev/null | grep -Fqx "$INDEX_FILE"; then
+     find "$INDEX_FILE" -mmin "-$INDEX_TTL_MINUTES" -print -quit 2>/dev/null |
+       grep -Fqx "$INDEX_FILE"; then
     cat "$INDEX_FILE"
     return 0
   fi
 
   tmp_index="$INDEX_FILE.tmp.$$"
-  for root in "${ROOTS[@]}"; do
+
+  for root in \
+    "$HOME/.local/share/backgrounds" \
+    "$HOME/Pictures/Wallpapers" \
+    "/usr/share/backgrounds/kali" \
+    "/usr/share/backgrounds" \
+    "/usr/share/wallpapers"; do
     [ -d "$root" ] || continue
-    find "$root" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) -print
-  done | sort -u > "$tmp_index"
+    find "$root" -type f \( \
+      -iname '*.jpg' -o \
+      -iname '*.jpeg' -o \
+      -iname '*.png' -o \
+      -iname '*.webp' \
+    \) -print
+  done |
+    sort -u > "$tmp_index"
 
   mv -f "$tmp_index" "$INDEX_FILE"
   cat "$INDEX_FILE"
@@ -49,6 +50,7 @@ mapfile -t wallpapers < <(
       [ -f "$image" ] && printf '%s\n' "$image"
     done
 )
+
 if [ "${#wallpapers[@]}" -eq 0 ]; then
   command -v xsetroot >/dev/null 2>&1 && xsetroot -solid '#101216'
   echo "No wallpapers found." >&2
@@ -57,92 +59,33 @@ fi
 
 current="$(cat "$STATE_FILE" 2>/dev/null || true)"
 
-prepare_wallpaper() {
-  local image="$1"
-  local tool=""
-  local cache_dir="$HOME/.cache/xlfr4n/wallpapers"
-  local key=""
-  local output=""
-  local framed=0
-  local width=""
-  local height=""
-  local top=0
-  local bottom=0
-  local draw=""
-
-  [ "${XLFR4N_WALLPAPER_RAW:-0}" = "1" ] && {
-    printf '%s\n' "$image"
-    return 0
-  }
-
-  if command -v magick >/dev/null 2>&1; then
-    tool="magick"
-  elif command -v convert >/dev/null 2>&1; then
-    tool="convert"
-  else
-    printf '%s\n' "$image"
-    return 0
-  fi
-
-  mkdir -p "$cache_dir"
-
-  if [ "$image" = "$DEFAULT_WALLPAPER" ] && [ "${XLFR4N_WALLPAPER_SAFE_ZONES:-1}" = "1" ]; then
-    framed=1
-  fi
-
-  key="$(printf '%s|%s|%s|%s' "$image" "$FRAME_VERSION" "$FRAME_TOP_PERCENT" "$FRAME_BOTTOM_PERCENT" | sha256sum | cut -d' ' -f1)"
-  output="$cache_dir/${key}-prepared.jpg"
-
-  if [ ! -s "$output" ] || [ "$image" -nt "$output" ]; then
-    if [ "$framed" -eq 1 ]; then
-      read -r width height < <("$tool" "$image" -format '%w %h' info: 2>/dev/null || true)
-      if [ -n "$width" ] && [ -n "$height" ]; then
-        top=$((height * FRAME_TOP_PERCENT / 100))
-        bottom=$((height * FRAME_BOTTOM_PERCENT / 100))
-        draw="rectangle 0,0 $((width - 1)) $((top - 1)) rectangle 0,$((height - bottom)) $((width - 1)) $((height - 1))"
-      fi
-    fi
-
-    if [ -n "$draw" ]; then
-      "$tool" "$image" \
-        -modulate 82,92,100 \
-        -fill '#000000' \
-        -draw "$draw" \
-        -strip -quality 92 "$output" >/dev/null 2>&1 || {
-        printf '%s\n' "$image"
-        return 0
-      }
-    else
-      "$tool" "$image" -modulate 82,92,100 -strip -quality 92 "$output" >/dev/null 2>&1 || {
-        printf '%s\n' "$image"
-        return 0
-      }
-    fi
-  fi
-
-  printf '%s\n' "$output"
-}
-
 set_wallpaper() {
   local image="$1"
-  local rendered
-  rendered="$(prepare_wallpaper "$image")"
-  feh --no-fehbg --bg-fill "$rendered"
+
+  [ -f "$image" ] || {
+    echo "Wallpaper not found: $image" >&2
+    return 1
+  }
+
+  feh --no-fehbg --bg-fill "$image"
   printf '%s\n' "$image" > "$STATE_FILE"
-  printf 'Wallpaper: %s\n' "$image"
+
   if command -v notify-send >/dev/null 2>&1; then
-    notify-send -u low -t 1000 "xLFr4n // WALLPAPER" "$(basename "$image")" >/dev/null 2>&1 || true
+    notify-send -u low -t 1000 "xLFr4n // WALLPAPER" "$(basename "$image")" \
+      >/dev/null 2>&1 || true
   fi
+
+  printf 'Wallpaper: %s\n' "$image"
 }
 
 case "${1:-}" in
   --default)
-    [ -f "$DEFAULT_WALLPAPER" ] || { echo "Default wallpaper not found: $DEFAULT_WALLPAPER" >&2; exit 1; }
     set_wallpaper "$DEFAULT_WALLPAPER"
     ;;
   --random|"")
     index=$(( $(od -An -N4 -tu4 /dev/urandom) % ${#wallpapers[@]} ))
-    if [ "${#wallpapers[@]}" -gt 1 ] && [ "${wallpapers[$index]}" = "$current" ]; then
+    if [ "${#wallpapers[@]}" -gt 1 ] &&
+       [ "${wallpapers[$index]}" = "$current" ]; then
       index=$(( (index + 1) % ${#wallpapers[@]} ))
     fi
     set_wallpaper "${wallpapers[$index]}"
@@ -161,12 +104,14 @@ case "${1:-}" in
     if [ -n "$current" ] && [ -f "$current" ]; then
       set_wallpaper "$current"
     else
-      set_wallpaper "${wallpapers[0]}"
+      set_wallpaper "$DEFAULT_WALLPAPER"
     fi
     ;;
   --set)
-    [ -n "${2:-}" ] || { echo "Usage: wallpaper --set /path/to/image"; exit 2; }
-    [ -f "$2" ] || { echo "File not found: $2" >&2; exit 2; }
+    [ -n "${2:-}" ] || {
+      echo "Usage: wallpaper --set /path/to/image" >&2
+      exit 2
+    }
     set_wallpaper "$2"
     ;;
   *)

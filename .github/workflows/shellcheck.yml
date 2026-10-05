@@ -25,6 +25,7 @@ jobs:
         run: |
           xvfb-run -a rofi -no-config -theme config/rofi/launcher.rasi -dump-theme >/dev/null
           xvfb-run -a rofi -no-config -theme config/rofi/fallback.rasi -dump-theme >/dev/null
+          xvfb-run -a rofi -no-config -theme config/rofi/menu.rasi -dump-theme >/dev/null
 
       - name: Validate desktop launchers
         run: desktop-file-validate config/applications/*.desktop

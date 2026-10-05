@@ -1,3 +1,22 @@
+## 2026-10-05 — UI polish / state correctness / capture workflow
+
+### Visual
+- Replaced the framed Red Sticker wallpaper treatment with a full-bleed Kali Hack wallpaper default, removing the artificial black top/bottom frame.
+- Kept the top and bottom metadata rails frameless and transparent so the wallpaper, workspace rail and dock share one visual language.
+- Increased the primary Tint2 dock icons to 52px and disabled startup/zoom/bounce effects across Tint2 and the Plank fallback.
+- Kept the xLFr4n identity static; the only remaining intentional motion is the one-shot TARGET entry pulse.
+
+### State
+- Added a dedicated VPN status helper that hides itself when OpenVPN/WireGuard is inactive instead of exposing stale TUN/WG interfaces.
+- Changed TARGET to disappear completely when unset rather than rendering a placeholder.
+- Separated physical network status from VPN status to avoid duplicated tunnel addresses.
+
+### Workflow
+- Added a dedicated Rofi command-palette theme for the xLFr4n Menu.
+- Expanded the menu with application, desktop, target, lab, network, screenshot and repair actions while retaining real command routing.
+- Expanded the screenshot menu with region/fullscreen save, clipboard capture and folder actions.
+- Added CI coverage for the new VPN helper, command palette, capture workflow and animation guardrails.
+
 ## 2026-09-30 — Dock / menu hardening
 
 - Fixed fullscreen transitions so Polybar and the dock remain visible when switching workspaces.

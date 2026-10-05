@@ -1,40 +1,36 @@
-/* ⚡ xLFr4n // Kali BSPWM 2026 */
+/* ⚡ xLFr4n // Kali command palette */
 * {
   bg: #0b0d10;
-  bg-alt: #161b22;
-  fg: #ffffff;
-  muted: #8b949e;
+  bg-alt: #141920;
+  fg: #f0f3f7;
+  muted: #7d8590;
   accent: #ff3344;
-  font: "JetBrains Mono 10";
   background-color: @bg;
   text-color: @fg;
-}
-
-configuration {
-  show-icons: true;
-  icon-theme: "Papirus-Dark";
-  drun-display-format: "{name}";
+  font: "JetBrains Mono 10";
 }
 
 window {
-  width: 52%;
+  width: 47%;
   location: center;
   anchor: center;
   background-color: @bg;
   border: 0px;
   border-color: transparent;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 18px;
 }
 
-mainbox { padding: 6px; }
+mainbox {
+  padding: 6px;
+}
 
 inputbar {
-  padding: 10px;
+  padding: 10px 12px;
   background-color: @bg-alt;
   border: 0px;
   border-color: transparent;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 prompt {
@@ -44,20 +40,20 @@ prompt {
 
 entry {
   text-color: @fg;
-  placeholder: "Search xlfr4n...";
+  placeholder: "Search command…";
   placeholder-color: @muted;
 }
 
 listview {
-  lines: 14;
+  lines: 16;
   columns: 1;
   fixed-height: false;
-  spacing: 6px;
-  padding: 8px 0px 0px 0px;
+  spacing: 4px;
+  padding: 10px 0px 0px 0px;
 }
 
 element {
-  padding: 10px;
+  padding: 9px 11px;
   border-radius: 8px;
   background-color: transparent;
 }
@@ -68,7 +64,6 @@ element selected {
 
 element-text {
   text-color: @fg;
-  font: "JetBrains Mono 10";
 }
 
 element-text selected {
@@ -76,6 +71,5 @@ element-text selected {
 }
 
 element-icon {
-  size: 1.0em;
-  padding: 0px 8px 0px 0px;
+  size: 0em;
 }
