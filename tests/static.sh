@@ -62,6 +62,7 @@ required_files=(
   config/fastfetch/config.jsonc
   config/fastfetch/xLFr4n.logo
   config/rofi/launcher.rasi
+  config/rofi/menu.rasi
   config/rofi/fallback.rasi
   config/dunst/dunstrc
   config/picom/picom.conf
@@ -75,6 +76,7 @@ required_files=(
   scripts/autostart
   scripts/kali-menu
   scripts/rofi-xlfr4n
+  scripts/vpn-status
   scripts/vmware-tools
   scripts/doctor.sh
   scripts/xlfr4n-banner
@@ -144,10 +146,10 @@ check "Top rail transparent over framed wallpaper" grep -Fq "background = #00000
 check "Top rail geometry" grep -Fq "height = 28pt" config/polybar/config.ini
 check "Bottom rail transparent over framed wallpaper" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Bottom rail geometry" grep -Fq "height = 48pt" config/polybar/config.ini
-check "Wallpaper safe-zone version" grep -Fq "FRAME_VERSION=\"red-sticker-safe-zones-v2\"" scripts/wallpaper
-check "Wallpaper top safe-zone" grep -Fq "FRAME_TOP_PERCENT=4" scripts/wallpaper
-check "Wallpaper bottom safe-zone" grep -Fq "FRAME_BOTTOM_PERCENT=8" scripts/wallpaper
-check "Wallpaper safe-zone toggle" grep -Fq "XLFR4N_WALLPAPER_SAFE_ZONES" scripts/wallpaper
+check "Wallpaper full bleed" grep -Fq "Full-bleed wallpaper layer" scripts/wallpaper
+check "Wallpaper fills screen" grep -Fq "feh --no-fehbg --bg-fill" scripts/wallpaper
+check "Wallpaper Kali Hack default" grep -Fq "/usr/share/backgrounds/kali/kali-hack-16x9.jpg" scripts/wallpaper
+check "Wallpaper no artificial frame" grep -Fq "No artificial top/bottom black frame" scripts/wallpaper
 check "Top Polybar overlay mode" grep -Fq "override-redirect = true" config/polybar/config.ini
 check "BSPWM bottom padding reserves metadata lane" grep -Fq "bottom_padding 64" config/bspwm/bspwmrc
 check "BSPWM top padding matches rail" grep -Fq "top_padding 38" config/bspwm/bspwmrc
@@ -262,7 +264,7 @@ check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
 check "Pulse animation reads theme" grep -Fq "theme-state/current" scripts/xlfr4n-pulse
 check "Pulse animation keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
 check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
-check "Identity pulse signal frames" grep -Fq "●···" scripts/xlfr4n-pulse
+check "Identity pulse static" grep -Fq "Static identity helper" scripts/xlfr4n-pulse
 check_not_present "Right KALI telemetry disabled" grep -Fq "modules-right = .*telemetry" config/polybar/config.ini
 check_not_present "APPS animation disabled" grep -Fq "launcher-pulse" config/polybar/config.ini
 check "Target one-shot module" grep -Fq "exec = ~/.local/bin/target-pulse" config/polybar/config.ini
@@ -276,7 +278,7 @@ check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
 check "Workspace rail script" grep -Fq "polybar workspace" scripts/workspace-rail
 check "Workspace rail staged after dock" grep -Fq "workspace-rail" scripts/autostart
 check "Uninstall date helper" grep -Fq "xlfr4n-date" uninstall.sh
-check "Wallpaper fixed default" grep -Fq '/usr/share/wallpapers/KaliRedSticker/contents/images/3840x2160.jpg' scripts/wallpaper
+check "Wallpaper fixed default" grep -Fq '/usr/share/backgrounds/kali/kali-hack-16x9.jpg' scripts/wallpaper
 check "Wallpaper package dependency" grep -Fq 'kali-wallpapers-2023' install.sh
 check "Autostart uses fixed wallpaper" grep -Fq 'wallpaper" --default' scripts/autostart
 check "Wallpaper raw override" grep -Fq 'XLFR4N_WALLPAPER_RAW:-0' scripts/wallpaper
@@ -364,5 +366,20 @@ check "Lab smoke test" test -x tests/lab-smoke.sh
 check "CI lab smoke step" grep -Fq "bash tests/lab-smoke.sh" .github/workflows/shellcheck.yml
 check "CI shellcheck smoke script" grep -Fq "shellcheck tests/lab-smoke.sh" .github/workflows/shellcheck.yml
 
-check "Bottom dock icon size" grep -Fq "launcher_icon_size = 48" config/tint2/tint2rc
-check "Fallback dock icon size" grep -Fq 'icon-size 48' scripts/dock
+check "Bottom dock icon size" grep -Fq "launcher_icon_size = 52" config/tint2/tint2rc
+check "Fallback dock icon size" grep -Fq 'icon-size 52' scripts/dock
+
+check "VPN helper" test -s scripts/vpn-status
+check "VPN module uses helper" grep -Fq 'exec = ~/.local/bin/vpn-status' config/polybar/config.ini
+check "VPN stale tunnel guard" grep -Fq "pgrep -af '[o]penvpn'" scripts/vpn-status
+check "Target empty is hidden" grep -Fq "Empty target = no module at all" scripts/target-pulse
+check "Command palette theme" test -s config/rofi/menu.rasi
+check "Command palette routing" grep -Fq "MENU_THEME=" scripts/rofi-xlfr4n
+check "Menu desktop action" grep -Fq "DESKTOP" scripts/kali-menu
+check "Menu ZAP routing" grep -Fq "ZAPROXY" scripts/kali-menu
+check "Screenshot clipboard actions" grep -Fq "REGION-CLIP" scripts/screenshot-menu
+check "Screenshot folder action" grep -Fq 'xdg-open "$SCREENSHOT_DIR"' scripts/screenshot-menu
+check "Plank animation disabled" grep -Fq "LaunchBounceHeight=0" config/plank/xLFr4n/dock.theme
+check "Plank zoom disabled" grep -Fq 'zoom-enabled false' scripts/dock
+check "Tint2 startup notifications disabled" grep -Fq "startup_notifications = 0" config/tint2/tint2rc
+check "VPN helper uninstall" grep -Fq 'vpn-status' uninstall.sh

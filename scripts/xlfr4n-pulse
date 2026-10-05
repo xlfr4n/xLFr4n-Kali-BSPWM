@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Visible, fixed-width Polybar identity animation.
-# The brand never disappears; only the signal sweep moves.
+# Static identity helper. Kept as a compatibility entrypoint; no animation.
 set -u
 
-theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
+theme="$(cat "\${HOME}/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
 case "$theme" in
   htb-green) accent='#9fef00' ;;
   nord) accent='#88c0d0' ;;
@@ -12,12 +11,4 @@ case "$theme" in
   *) accent='#ff3344' ;;
 esac
 
-signals=( '●···' '◉···' '○●··' '·◉··' '··●·' '··◉·' '···●' '··◉·' '··●·' '·◉··' '○●··' '◉···' )
-frames=()
-for signal in "${signals[@]}"; do
-  frames+=( "%{F$accent}⚡ xLFr4n%{F$accent}  [$signal]  KALI%{F-}" )
-done
-
-tick="$(awk '{printf "%d", $1 * 10}' /proc/uptime 2>/dev/null || printf '0')"
-index=$((tick % ${#frames[@]}))
-printf '%s\n' "${frames[$index]}"
+printf '%%{F%s}⚡ xLFr4n%%{F-}\\n' "$accent"

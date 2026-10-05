@@ -6,7 +6,14 @@ set -Eeuo pipefail
 
 THEME="$HOME/.config/rofi/launcher.rasi"
 FALLBACK="$HOME/.config/rofi/fallback.rasi"
+MENU_THEME="$HOME/.config/rofi/menu.rasi"
 LOG="$HOME/.cache/xlfr4n-rofi.log"
+
+use_menu=0
+for arg in "$@"; do
+  [ "$arg" = "-dmenu" ] && use_menu=1
+done
+[ "$use_menu" -eq 1 ] && [ -s "$MENU_THEME" ] && THEME="$MENU_THEME"
 
 mkdir -p "$(dirname "$LOG")"
 

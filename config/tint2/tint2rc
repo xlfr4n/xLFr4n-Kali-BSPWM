@@ -33,21 +33,21 @@ strut_policy = follow_size
 panel_window_name = xLFr4n Dock
 mouse_effects = 1
 font_shadow = 0
-mouse_hover_icon_asb = 100 0 28
+mouse_hover_icon_asb = 100 0 18
 mouse_pressed_icon_asb = 100 0 -10
 
 #-------------------------------------
 # Launcher
 #-------------------------------------
-launcher_padding = 6 0 5
+launcher_padding = 5 0 5
 launcher_background_id = 0
 launcher_icon_background_id = 0
-launcher_icon_size = 48
+launcher_icon_size = 52
 launcher_icon_asb = 100 0 0
 launcher_icon_theme = Papirus-Dark
 launcher_icon_theme_override = 1
 launcher_tooltip = 1
-startup_notifications = 1
+startup_notifications = 0
 
 launcher_item_app = ~/.local/share/applications/xLFr4n-kali-menu.desktop
 launcher_item_app = ~/.local/share/applications/xLFr4n-brave.desktop

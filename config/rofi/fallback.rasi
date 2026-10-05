@@ -3,7 +3,6 @@
   bg: #0b0d10;
   fg: #ffffff;
   accent: #ff3344;
-  border: #22262d;
   muted: #8b949e;
   font: "JetBrains Mono 10";
   background-color: @bg;
@@ -16,7 +15,7 @@ prompt { text-color: @accent; padding: 0px 10px 0px 0px; }
 entry { text-color: @fg; placeholder: "Search xLFr4n..."; placeholder-color: @muted; }
 listview { lines: 9; spacing: 6px; padding: 8px 0px 0px; }
 element { padding: 9px; border-radius: 8px; background-color: transparent; }
+element selected { background-color: #1b2028; }
 element-text { text-color: @fg; }
-element selected { background-color: @accent; }
-element-text selected { text-color: #ffffff; }
+element-text selected { text-color: @accent; }
 element-icon { size: 1.0em; padding: 0px 8px 0px 0px; }

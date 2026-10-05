@@ -1,75 +1,82 @@
 #!/usr/bin/env bash
-# ⚡ xlfr4n // Kali BSPWM 2026
-
+# ⚡ xLFr4n // Kali BSPWM 2026
+# Command palette for the whole workspace. Actions remain real commands.
 set -Eeuo pipefail
 
 command -v rofi-xlfr4n >/dev/null 2>&1 || {
   echo "rofi-xlfr4n is not installed." >&2
-  exit 1
+  exit 127
 }
 
 entries=$(cat <<'EOF'
-TERMINAL  Ghostty + tmux
-SPOTLIGHT Launch apps
-MISSION   Window overview
-BRAVE     Open Brave
-DOCK      Toggle floating dock
-REPAIR    Re-sync dock backends
-DESKTOP   Apply desktop style
-TARGET    Set / clear target
-THEME     Change theme
-WALLPAPER Change wallpaper
-LAB       Open Kali Lab
-LABSTATUS Engagement status
-LABTOOLS  Red Team tool profiles
-MONITOR   Refresh displays
-NETWORK   Network manager
-DOCTOR    Run diagnostics
-SYSTEM    Terminal system snapshot
-VIRT      Virtualization tools
-SCREEN    Screenshot menu
-LOCK      Lock session
-POWER     Power menu
-EXIT      Close menu
+TERMINAL      Ghostty + fresh tmux
+APPLICATIONS  Launch applications
+WINDOWS       Mission Control
+BRAVE         Open Brave
+DOCK          Toggle application dock
+DOCK-REPAIR   Rebuild dock launchers
+DESKTOP       Apply desktop presentation
+TARGET        Set or clear engagement target
+NETWORK       Network Manager
+LAB           Open Kali Lab
+LABSTATUS     Engagement status
+LABTOOLS      Red-team tool profiles
+THEME         Change workspace theme
+WALLPAPER     Change wallpaper
+MONITOR       Refresh displays
+SCREEN        Screenshot tools
+DOCTOR        Run diagnostics
+SYSTEM        System snapshot
+VIRT          Virtualization tools
+LOCK          Lock session
+POWER         Power menu
+EXIT          Close menu
 EOF
 )
+
 if command -v firefox-esr >/dev/null 2>&1 || command -v firefox >/dev/null 2>&1; then
-  entries=$entries$'\n'"FIREFOX   Open Firefox"
+  entries+="
+FIREFOX       Open Firefox"
 fi
 if command -v wireshark >/dev/null 2>&1; then
-  entries=$entries$'\n'"WIRESHARK Capture & analyse traffic"
+  entries+="
+WIRESHARK     Capture and analyse traffic"
 fi
 if command -v burpsuite >/dev/null 2>&1; then
-  entries=$entries$'\n'"BURP      Open Burp Suite"
+  entries+="
+BURP          Open Burp Suite"
 fi
 if command -v zaproxy >/dev/null 2>&1; then
-  entries=$entries$'\n'"ZAPROXY   Open OWASP ZAP"
+  entries+="
+ZAPROXY       Open OWASP ZAP"
 fi
-choice="$(printf '%s\n' "$entries" | rofi-xlfr4n -dmenu -i -matching fuzzy -p '⚡ xLFr4n // Kali' || true)"
+
+choice="$(printf '%s\n' "$entries" | rofi-xlfr4n -dmenu -i -matching fuzzy -p '⚡ xLFr4n' || true)"
 
 case "$choice" in
   TERMINAL*) dock-launch terminal ;;
-  SPOTLIGHT*) rofi-xlfr4n -show drun -show-icons -p 'Spotlight' ;;
-  MISSION*) mission-control ;;
+  APPLICATIONS*) rofi-xlfr4n -show drun -show-icons -p 'Apps' ;;
+  WINDOWS*) mission-control ;;
   BRAVE*) dock-launch brave ;;
   FIREFOX*) dock-launch firefox ;;
   WIRESHARK*) dock-launch wireshark ;;
   BURP*) dock-launch burp ;;
+  ZAPROXY*) dock-launch zaproxy ;;
+  DOCK-REPAIR*) dock --restart ;;
   DOCK*) dock --toggle ;;
-  REPAIR*) dock --restart ;;
   DESKTOP*) desktop-style --apply ;;
+  TARGET*) settarget ;;
+  NETWORK*) dock-launch network ;;
   LABSTATUS*) xlfr4n-terminal --title Kali-Engagement -- lab status ;;
   LABTOOLS*) xlfr4n-terminal --title Kali-RedTeam-Tools -- lab tools status ;;
   LAB*) dock-launch lab ;;
-  TARGET*) settarget ;;
   THEME*) theme-switch ;;
   WALLPAPER*) wallpaper --random ;;
   MONITOR*) monitor-refresh ;;
-  NETWORK*) dock-launch network ;;
+  SCREEN*) screenshot-menu ;;
   DOCTOR*) xlfr4n-terminal --title Kali-Doctor -- doctor.sh ;;
   SYSTEM*) xlfr4n-terminal --title xLFr4n-System -- xlfr4n-banner --static ;;
   VIRT*) xlfr4n-terminal --title Virtualization-Tools -- vmware-tools ;;
-  SCREEN*) screenshot-menu ;;
   LOCK*) lock-screen ;;
   POWER*) power-menu ;;
   EXIT*|"") exit 0 ;;
