@@ -7,14 +7,14 @@ STATE_DIR="$HOME/.config/wallpaper-state"
 STATE_FILE="$STATE_DIR/current"
 INDEX_FILE="$HOME/.cache/xlfr4n/wallpapers.index"
 INDEX_TTL_MINUTES=360
-DEFAULT_WALLPAPER="\${XLFR4N_DEFAULT_WALLPAPER:-/usr/share/backgrounds/kali/kali-hack-16x9.jpg}"
+DEFAULT_WALLPAPER="${XLFR4N_DEFAULT_WALLPAPER:-/usr/share/backgrounds/kali/kali-hack-16x9.jpg}"
 
 mkdir -p "$STATE_DIR" "$(dirname "$INDEX_FILE")"
 
 collect() {
   local root tmp_index
 
-  if [ "\${XLFR4N_WALLPAPER_REINDEX:-0}" != "1" ] &&
+  if [ "${XLFR4N_WALLPAPER_REINDEX:-0}" != "1" ] &&
      [ -s "$INDEX_FILE" ] &&
      find "$INDEX_FILE" -mmin "-$INDEX_TTL_MINUTES" -print -quit 2>/dev/null |
        grep -Fqx "$INDEX_FILE"; then
@@ -51,7 +51,7 @@ mapfile -t wallpapers < <(
     done
 )
 
-if [ "\${#wallpapers[@]}" -eq 0 ]; then
+if [ "${#wallpapers[@]}" -eq 0 ]; then
   command -v xsetroot >/dev/null 2>&1 && xsetroot -solid '#101216'
   echo "No wallpapers found." >&2
   exit 0
@@ -78,27 +78,27 @@ set_wallpaper() {
   printf 'Wallpaper: %s\n' "$image"
 }
 
-case "\${1:-}" in
+case "${1:-}" in
   --default)
     set_wallpaper "$DEFAULT_WALLPAPER"
     ;;
   --random|"")
-    index=$(( $(od -An -N4 -tu4 /dev/urandom) % \${#wallpapers[@]} ))
-    if [ "\${#wallpapers[@]}" -gt 1 ] &&
-       [ "\${wallpapers[$index]}" = "$current" ]; then
-      index=$(( (index + 1) % \${#wallpapers[@]} ))
+    index=$(( $(od -An -N4 -tu4 /dev/urandom) % ${#wallpapers[@]} ))
+    if [ "${#wallpapers[@]}" -gt 1 ] &&
+       [ "${wallpapers[$index]}" = "$current" ]; then
+      index=$(( (index + 1) % ${#wallpapers[@]} ))
     fi
-    set_wallpaper "\${wallpapers[$index]}"
+    set_wallpaper "${wallpapers[$index]}"
     ;;
   --next)
     next=0
-    for i in "\${!wallpapers[@]}"; do
-      if [ "\${wallpapers[$i]}" = "$current" ]; then
-        next=$(( (i + 1) % \${#wallpapers[@]} ))
+    for i in "${!wallpapers[@]}"; do
+      if [ "${wallpapers[$i]}" = "$current" ]; then
+        next=$(( (i + 1) % ${#wallpapers[@]} ))
         break
       fi
     done
-    set_wallpaper "\${wallpapers[$next]}"
+    set_wallpaper "${wallpapers[$next]}"
     ;;
   --current)
     if [ -n "$current" ] && [ -f "$current" ]; then
@@ -108,7 +108,7 @@ case "\${1:-}" in
     fi
     ;;
   --set)
-    [ -n "\${2:-}" ] || {
+    [ -n "${2:-}" ] || {
       echo "Usage: wallpaper --set /path/to/image" >&2
       exit 2
     }

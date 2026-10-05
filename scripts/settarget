@@ -12,7 +12,7 @@ notify_target() {
   notify-send -u low -t 1600 "⚡ xLFr4n // TARGET" "$1" >/dev/null 2>&1 || true
 }
 
-if [[ "\${1:-}" == "--status" ]]; then
+if [[ "${1:-}" == "--status" ]]; then
   if [[ -s "$TARGET_FILE" ]]; then
     printf 'TARGET %s\n' "$(cat "$TARGET_FILE")"
   else
@@ -21,7 +21,7 @@ if [[ "\${1:-}" == "--status" ]]; then
   exit 0
 fi
 
-if [[ -z "\${1:-}" ]]; then
+if [[ -z "${1:-}" ]]; then
   printf 'Target IP/host (empty to clear): '
   read -r value
   if [[ -z "$value" ]]; then
@@ -29,10 +29,10 @@ if [[ -z "\${1:-}" ]]; then
     notify_target "Target cleared."
     exit 0
   fi
-  name="\${2:-}"
+  name="${2:-}"
 else
   value="$1"
-  name="\${2:-}"
+  name="${2:-}"
 fi
 
 [[ "$value" =~ ^[A-Za-z0-9._:/-]+$ ]] || {

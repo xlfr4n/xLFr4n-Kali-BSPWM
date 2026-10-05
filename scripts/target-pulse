@@ -23,8 +23,8 @@ fi
 
 if (( elapsed < 1400 )); then
   frames=('·' '•' '●' '◉' '●' '•')
-  index=$(( (elapsed / 220) % \${#frames[@]} ))
-  printf '%%{F%s}%s %s%%{F-}\n' "$FG" "$label" "\${frames[$index]}"
+  index=$(( (elapsed / 220) % ${#frames[@]} ))
+  printf '%%{F%s}%s %s%%{F-}\n' "$FG" "$label" "${frames[$index]}"
 else
   printf '%%{F%s}%s%%{F-}\n' "$FG" "$label"
 fi
