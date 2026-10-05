@@ -281,7 +281,7 @@ check "Uninstall date helper" grep -Fq "xlfr4n-date" uninstall.sh
 check "Wallpaper fixed default" grep -Fq '/usr/share/backgrounds/kali/kali-hack-16x9.jpg' scripts/wallpaper
 check "Wallpaper package dependency" grep -Fq 'kali-wallpapers-2023' install.sh
 check "Autostart uses fixed wallpaper" grep -Fq 'wallpaper" --default' scripts/autostart
-check "Wallpaper raw override" grep -Fq 'XLFR4N_WALLPAPER_RAW:-0' scripts/wallpaper
+check "Wallpaper reindex override" grep -Fq 'XLFR4N_WALLPAPER_REINDEX:-0' scripts/wallpaper
 check "Polybar fallback dock uses launch helper" grep -Fq "click-left = dock-launch terminal" config/polybar/config.ini
 check "Kali Lab shortcut uses launch helper" grep -Fq 'xlfr4n-launch "Kali Lab"' config/sxhkd/sxhkdrc
 check "Screenshot menu uses launch helper" grep -Fq 'xlfr4n-launch "Screenshot"' scripts/screenshot-menu
