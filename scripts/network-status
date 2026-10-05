@@ -1,33 +1,28 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Show physical networking only. VPN state is handled by vpn-status.
+# Follow the active default route instead of assuming wired networking.
 set -u
 
 theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
 case "$theme" in
-  htb-green) good='#5ee881' ;;
-  nord) good='#a3be8c' ;;
-  purple) good='#50fa7b' ;;
-  *) good='#5ee881' ;;
+  htb-green) good='#5ee881'; warn='#ffc857' ;;
+  nord) good='#a3be8c'; warn='#ebcb8b' ;;
+  purple) good='#50fa7b'; warn='#f1fa8c' ;;
+  *) good='#5ee881'; warn='#ffc857' ;;
 esac
 
-iface="$(
-  ip route show default 2>/dev/null |
-    awk '$5 !~ /^(tun|tap|wg|docker|br-|virbr|veth)/ {print $5; exit}'
-)"
-
-[ -n "$iface" ] || exit 0
-
-state="$(cat "/sys/class/net/$iface/operstate" 2>/dev/null || printf 'unknown')"
-[ "$state" = "up" ] || exit 0
+iface="$(ip route show default 2>/dev/null | awk 'NR==1 {print $5}')"
+[ -n "$iface" ] || { printf '%%{F%s} offline%%{F-}\n' "$warn"; exit 0; }
 
 case "$iface" in
   wl*) icon='' ;;
   en*|eth*) icon='' ;;
+  tun*|wg*) icon='' ;;
   *) icon='' ;;
 esac
 
-ip4="$(ip -4 addr show dev "$iface" 2>/dev/null | awk '/inet / {sub(/\\/.*/, "", $2); print $2; exit}')"
-[ -n "$ip4" ] || exit 0
+state="$(cat "/sys/class/net/$iface/operstate" 2>/dev/null || printf "unknown")"
+[ "$state" = "up" ] || { printf "%%{F%s}%s offline%%{F-}\n" "$warn" "$icon"; exit 0; }
 
-printf '%%{F%s}%s %s%%{F-}\n' "$good" "$icon" "$ip4"
+ip4="$(ip -4 addr show dev "$iface" 2>/dev/null | awk '/inet / {sub(/\/.*/, "", $2); print $2; exit}')"
+printf "%%{F%s}%s %s%%{F-}\n" "$good" "$icon" "${ip4:-connected}"

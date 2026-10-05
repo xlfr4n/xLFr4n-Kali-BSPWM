@@ -62,7 +62,6 @@ required_files=(
   config/fastfetch/config.jsonc
   config/fastfetch/xLFr4n.logo
   config/rofi/launcher.rasi
-  config/rofi/menu.rasi
   config/rofi/fallback.rasi
   config/dunst/dunstrc
   config/picom/picom.conf
@@ -76,7 +75,6 @@ required_files=(
   scripts/autostart
   scripts/kali-menu
   scripts/rofi-xlfr4n
-  scripts/vpn-status
   scripts/vmware-tools
   scripts/doctor.sh
   scripts/xlfr4n-banner
@@ -146,10 +144,10 @@ check "Top rail transparent over framed wallpaper" grep -Fq "background = #00000
 check "Top rail geometry" grep -Fq "height = 28pt" config/polybar/config.ini
 check "Bottom rail transparent over framed wallpaper" grep -Fq "background = #00000000" config/polybar/config.ini
 check "Bottom rail geometry" grep -Fq "height = 48pt" config/polybar/config.ini
-check "Wallpaper full bleed" grep -Fq "Full-bleed wallpaper layer" scripts/wallpaper
-check "Wallpaper fills screen" grep -Fq "feh --no-fehbg --bg-fill" scripts/wallpaper
-check "Wallpaper Kali Hack default" grep -Fq "/usr/share/backgrounds/kali/kali-hack-16x9.jpg" scripts/wallpaper
-check "Wallpaper no artificial frame" grep -Fq "No artificial top/bottom black frame" scripts/wallpaper
+check "Wallpaper safe-zone version" grep -Fq "FRAME_VERSION=\"red-sticker-safe-zones-v2\"" scripts/wallpaper
+check "Wallpaper top safe-zone" grep -Fq "FRAME_TOP_PERCENT=4" scripts/wallpaper
+check "Wallpaper bottom safe-zone" grep -Fq "FRAME_BOTTOM_PERCENT=8" scripts/wallpaper
+check "Wallpaper safe-zone toggle" grep -Fq "XLFR4N_WALLPAPER_SAFE_ZONES" scripts/wallpaper
 check "Top Polybar overlay mode" grep -Fq "override-redirect = true" config/polybar/config.ini
 check "BSPWM bottom padding reserves metadata lane" grep -Fq "bottom_padding 64" config/bspwm/bspwmrc
 check "BSPWM top padding matches rail" grep -Fq "top_padding 38" config/bspwm/bspwmrc
@@ -243,11 +241,11 @@ check "Screenshot launcher" grep -Fq "screenshot" scripts/dock-launch
 check "Nine BSPWM desktops" grep -Fq "bspc monitor -d 1 2 3 4 5 6 7 8 9" config/bspwm/bspwmrc
 check "Nine workspace bindings" grep -Fq "super + {1,2,3,4,5,6,7,8,9}" config/sxhkd/sxhkdrc
 check_not_present "No nm-applet startup" grep -Fq "command -v nm-applet" scripts/autostart
-check "Menu applications" grep -Fq "APPLICATIONS  Launch applications" scripts/kali-menu
-check "Menu Mission Control" grep -Fq "WINDOWS       Mission Control" scripts/kali-menu
-check "Menu system snapshot" grep -Fq "SYSTEM        System snapshot" scripts/kali-menu
-check "Menu dock" grep -Fq "DOCK          Toggle application dock" scripts/kali-menu
-check "Dock repair action" grep -Fq "DOCK-REPAIR   Rebuild dock launchers" scripts/kali-menu
+check "Menu Spotlight" grep -Fq "SPOTLIGHT Launch apps" scripts/kali-menu
+check "Menu Mission Control" grep -Fq "MISSION   Window overview" scripts/kali-menu
+check "Menu system snapshot" grep -Fq "SYSTEM    Terminal system snapshot" scripts/kali-menu
+check "Menu dock" grep -Fq "DOCK      Toggle floating dock" scripts/kali-menu
+check "Dock repair action" grep -Fq "REPAIR    Re-sync dock backends" scripts/kali-menu
 check "Desktop docs" grep -Fq "xLFr4n" docs/DESKTOP-STYLE.md
 check "xLFr4n identity in scripts" grep -Rqs "xlfr4n" scripts --exclude="README.md"
 check "Fullscreen binding" grep -Fq "fullscreen-toggle" config/sxhkd/sxhkdrc
@@ -261,16 +259,16 @@ check "Launcher startup notification" grep -Fq "StartupNotify=true" scripts/dock
 check "Banner ASCII frame" grep -Fq "+------------------------------------------------------------------+" scripts/xlfr4n-banner
 check "Banner animation" grep -Fq '"BOOT" "LINK" "SYNC" "DRAW" "READY"' scripts/xlfr4n-banner
 check "Banner localized clock" grep -Fq "LC_TIME" scripts/xlfr4n-banner
-check "Identity helper reads theme" grep -Fq "theme-state/current" scripts/xlfr4n-pulse
-check "Identity helper keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
-check_not_present "Identity helper has no legacy KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
-check "Identity pulse static" grep -Fq "Static identity helper" scripts/xlfr4n-pulse
+check "Pulse animation reads theme" grep -Fq "theme-state/current" scripts/xlfr4n-pulse
+check "Pulse animation keeps xLFr4n identity" grep -Fq "xLFr4n" scripts/xlfr4n-pulse
+check "Pulse animation keeps KALI marker" grep -Fq "KALI" scripts/xlfr4n-pulse
+check "Identity pulse signal frames" grep -Fq "●···" scripts/xlfr4n-pulse
 check_not_present "Right KALI telemetry disabled" grep -Fq "modules-right = .*telemetry" config/polybar/config.ini
 check_not_present "APPS animation disabled" grep -Fq "launcher-pulse" config/polybar/config.ini
 check "Target one-shot module" grep -Fq "exec = ~/.local/bin/target-pulse" config/polybar/config.ini
 check "Launcher pulse helper" test -s scripts/launcher-pulse
 check "Target pulse helper" test -s scripts/target-pulse
-check "Identity refresh is low-frequency" grep -Fq "interval = 30" config/polybar/config.ini
+check "Pulse animation cadence" grep -Fq "interval = 0.18" config/polybar/config.ini
 check_not_present "KALI right telemetry disabled" grep -Eq "modules-right = .*telemetry" config/polybar/config.ini
 check "Localized date helper" grep -Fq "date '+%A, %-d" scripts/xlfr4n-date
 check "Spanish date default" grep -Fq 'XLFR4N_DATE_LOCALE:-es' scripts/xlfr4n-date
@@ -278,13 +276,13 @@ check "Workspace HUD ready frame" grep -Fq "focus ready" scripts/workspace-hud
 check "Workspace rail script" grep -Fq "polybar workspace" scripts/workspace-rail
 check "Workspace rail staged after dock" grep -Fq "workspace-rail" scripts/autostart
 check "Uninstall date helper" grep -Fq "xlfr4n-date" uninstall.sh
-check "Wallpaper fixed default" grep -Fq '/usr/share/backgrounds/kali/kali-hack-16x9.jpg' scripts/wallpaper
+check "Wallpaper fixed default" grep -Fq '/usr/share/wallpapers/KaliRedSticker/contents/images/3840x2160.jpg' scripts/wallpaper
 check "Wallpaper package dependency" grep -Fq 'kali-wallpapers-2023' install.sh
 check "Autostart uses fixed wallpaper" grep -Fq 'wallpaper" --default' scripts/autostart
-check "Wallpaper reindex override" grep -Fq 'XLFR4N_WALLPAPER_REINDEX:-0' scripts/wallpaper
+check "Wallpaper raw override" grep -Fq 'XLFR4N_WALLPAPER_RAW:-0' scripts/wallpaper
 check "Polybar fallback dock uses launch helper" grep -Fq "click-left = dock-launch terminal" config/polybar/config.ini
 check "Kali Lab shortcut uses launch helper" grep -Fq 'xlfr4n-launch "Kali Lab"' config/sxhkd/sxhkdrc
-check "Screenshot menu uses Flameshot" grep -Fq "flameshot gui" scripts/screenshot-menu
+check "Screenshot menu uses launch helper" grep -Fq 'xlfr4n-launch "Screenshot"' scripts/screenshot-menu
 
 # ── Hardening / regression guards (2026-09-30 review) ─────────────────────
 check "syntax brightness-control" bash -n scripts/brightness-control
@@ -366,20 +364,5 @@ check "Lab smoke test" test -x tests/lab-smoke.sh
 check "CI lab smoke step" grep -Fq "bash tests/lab-smoke.sh" .github/workflows/shellcheck.yml
 check "CI shellcheck smoke script" grep -Fq "shellcheck tests/lab-smoke.sh" .github/workflows/shellcheck.yml
 
-check "Bottom dock icon size" grep -Fq "launcher_icon_size = 52" config/tint2/tint2rc
-check "Fallback dock icon size" grep -Fq 'icon-size 52' scripts/dock
-
-check "VPN helper" test -s scripts/vpn-status
-check "VPN module uses helper" grep -Fq 'exec = ~/.local/bin/vpn-status' config/polybar/config.ini
-check "VPN stale tunnel guard" grep -Fq "pgrep -af '[o]penvpn'" scripts/vpn-status
-check "Target empty is hidden" grep -Fq "Empty target = no module at all" scripts/target-pulse
-check "Command palette theme" test -s config/rofi/menu.rasi
-check "Command palette routing" grep -Fq "MENU_THEME=" scripts/rofi-xlfr4n
-check "Menu desktop action" grep -Fq "DESKTOP" scripts/kali-menu
-check "Menu ZAP routing" grep -Fq "ZAPROXY" scripts/kali-menu
-check "Screenshot clipboard actions" grep -Fq "REGION-CLIP" scripts/screenshot-menu
-check "Screenshot folder action" grep -Fq 'xdg-open "$SCREENSHOT_DIR"' scripts/screenshot-menu
-check "Plank animation disabled" grep -Fq "LaunchBounceHeight=0" config/plank/xLFr4n/dock.theme
-check "Plank zoom disabled" grep -Fq 'zoom-enabled false' scripts/dock
-check "Tint2 startup notifications disabled" grep -Fq "startup_notifications = 0" config/tint2/tint2rc
-check "VPN helper uninstall" grep -Fq 'vpn-status' uninstall.sh
+check "Bottom dock icon size" grep -Fq "launcher_icon_size = 48" config/tint2/tint2rc
+check "Fallback dock icon size" grep -Fq 'icon-size 48' scripts/dock

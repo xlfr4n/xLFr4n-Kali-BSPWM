@@ -1,22 +1,15 @@
 #!/usr/bin/env bash
-# ⚡ xLFr4n // Kali BSPWM 2026
-# Set/clear the active engagement target without leaving stale UI behind.
+# ⚡ xlfr4n // Kali BSPWM 2026
 set -Eeuo pipefail
 
 TARGET_FILE="$HOME/.config/polybar/target"
-START_FILE="$HOME/.cache/xlfr4n-target-boot-ms"
-mkdir -p "$(dirname "$TARGET_FILE")" "$(dirname "$START_FILE")"
-
-notify_target() {
-  command -v notify-send >/dev/null 2>&1 || return 0
-  notify-send -u low -t 1600 "⚡ xLFr4n // TARGET" "$1" >/dev/null 2>&1 || true
-}
+mkdir -p "$(dirname "$TARGET_FILE")"
 
 if [[ "${1:-}" == "--status" ]]; then
   if [[ -s "$TARGET_FILE" ]]; then
     printf 'TARGET %s\n' "$(cat "$TARGET_FILE")"
   else
-    printf 'TARGET not set\n'
+    printf 'TARGET —\n'
   fi
   exit 0
 fi
@@ -24,11 +17,7 @@ fi
 if [[ -z "${1:-}" ]]; then
   printf 'Target IP/host (empty to clear): '
   read -r value
-  if [[ -z "$value" ]]; then
-    : > "$TARGET_FILE"
-    notify_target "Target cleared."
-    exit 0
-  fi
+  [[ -n "$value" ]] || { : > "$TARGET_FILE"; exit 0; }
   name="${2:-}"
 else
   value="$1"
@@ -46,6 +35,4 @@ else
   printf '%s\n' "$value" > "$TARGET_FILE"
 fi
 
-date '+%s%3N' > "$START_FILE"
-notify_target "Target set: $value"
 echo "Target set."

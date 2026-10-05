@@ -19,9 +19,9 @@ apply_settings(){
   gsettings set "$schema" theme "'xLFr4n'" 2>/dev/null || true
   gsettings set "$schema" position "'bottom'" 2>/dev/null || true
   gsettings set "$schema" hide-mode "'intelligent'" 2>/dev/null || true
-  gsettings set "$schema" icon-size 52 2>/dev/null || true
-  gsettings set "$schema" zoom-enabled false 2>/dev/null || true
-  gsettings set "$schema" zoom-percent 100 2>/dev/null || true
+  gsettings set "$schema" icon-size 48 2>/dev/null || true
+  gsettings set "$schema" zoom-enabled true 2>/dev/null || true
+  gsettings set "$schema" zoom-percent 140 2>/dev/null || true
   gsettings set "$schema" items-alignment "'center'" 2>/dev/null || true
   gsettings set "$schema" alignment "'center'" 2>/dev/null || true
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# One-shot TARGET entrance animation. Empty target = no module at all.
+# One-shot TARGET entrance animation. After the session intro, the value stays static.
 set -u
 
 TARGET_FILE="$HOME/.config/polybar/target"
@@ -8,14 +8,12 @@ START_FILE="$HOME/.cache/xlfr4n-target-boot-ms"
 FG='#f0f3f7'
 
 target="$(cat "$TARGET_FILE" 2>/dev/null || true)"
-[ -n "$target" ] || exit 0
-
-label=" TARGET $target"
+value="${target:-—}"
+label=" TARGET ${value}"
 
 now="$(date '+%s%3N' 2>/dev/null || printf '0')"
 started="$(cat "$START_FILE" 2>/dev/null || printf '0')"
 elapsed=999999
-
 if [[ "$now" =~ ^[0-9]+$ && "$started" =~ ^[0-9]+$ ]]; then
   elapsed=$((now - started))
   (( elapsed < 0 )) && elapsed=0
@@ -24,7 +22,7 @@ fi
 if (( elapsed < 1400 )); then
   frames=('·' '•' '●' '◉' '●' '•')
   index=$(( (elapsed / 220) % ${#frames[@]} ))
-  printf '%%{F%s}%s %s%%{F-}\n' "$FG" "$label" "${frames[$index]}"
+  printf '%%{F%s}%s %s%%{F-}' "$FG" "$label" "${frames[$index]}"
 else
-  printf '%%{F%s}%s%%{F-}\n' "$FG" "$label"
+  printf '%%{F%s}%s%%{F-}' "$FG" "$label"
 fi

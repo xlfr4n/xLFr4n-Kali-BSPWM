@@ -1,47 +1,21 @@
 #!/usr/bin/env bash
-# ⚡ xLFr4n // Kali BSPWM 2026
-# Functional screenshot command palette: save, copy or open the capture folder.
+# ⚡ xlfr4n // Kali BSPWM 2026
+
 set -Eeuo pipefail
 
 command -v flameshot >/dev/null 2>&1 || {
   echo "Flameshot is not installed." >&2
-  exit 127
+  exit 1
 }
 
-SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
-mkdir -p "$SCREENSHOT_DIR"
-
-notify_done() {
-  command -v notify-send >/dev/null 2>&1 || return 0
-  notify-send -u low -t 1500 "⚡ xLFr4n // SCREENSHOT" "$1" >/dev/null 2>&1 || true
-}
+mkdir -p "$HOME/Pictures/Screenshots"
 
 choice="$(printf '%s\n' \
-  'REGION       Select region and save' \
-  'FULLSCREEN   Capture full screen and save' \
-  'REGION-CLIP  Copy selected region to clipboard' \
-  'FULL-CLIP    Copy full screen to clipboard' \
-  'FOLDER       Open screenshots folder' |
+  'REGION      Select region' \
+  'FULLSCREEN  Capture full screen' |
   rofi-xlfr4n -dmenu -p 'Screenshot' || true)"
 
 case "$choice" in
-  REGION-CLIP*)
-    flameshot gui --clipboard
-    notify_done "Region copied to clipboard."
-    ;;
-  FULL-CLIP*)
-    flameshot full --clipboard
-    notify_done "Full screen copied to clipboard."
-    ;;
-  REGION*)
-    flameshot gui -p "$SCREENSHOT_DIR"
-    notify_done "Region saved."
-    ;;
-  FULLSCREEN*)
-    flameshot full -p "$SCREENSHOT_DIR"
-    notify_done "Full screen saved."
-    ;;
-  FOLDER*)
-    xdg-open "$SCREENSHOT_DIR" >/dev/null 2>&1 &
-    ;;
+  REGION*) xlfr4n-launch "Screenshot" -- flameshot gui ;;
+  FULLSCREEN*) xlfr4n-launch "Screenshot" -- flameshot full -p "$HOME/Pictures/Screenshots" ;;
 esac

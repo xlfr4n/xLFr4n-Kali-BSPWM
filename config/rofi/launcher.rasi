@@ -1,11 +1,14 @@
-/* ⚡ xLFr4n // Kali BSPWM 2026 */
+/* ⚡ xlfr4n // Kali BSPWM 2026 */
+
 * {
   bg: #0b0d10;
   bg-alt: #161b22;
   fg: #ffffff;
   muted: #8b949e;
   accent: #ff3344;
+  dark-accent: #ffffff;
   font: "JetBrains Mono 10";
+  border: #22262d;
   background-color: @bg;
   text-color: @fg;
 }
@@ -27,7 +30,9 @@ window {
   padding: 18px;
 }
 
-mainbox { padding: 6px; }
+mainbox {
+  padding: 6px;
+}
 
 inputbar {
   padding: 10px;
@@ -62,17 +67,18 @@ element {
   background-color: transparent;
 }
 
-element selected {
-  background-color: #1b2028;
-}
-
 element-text {
   text-color: @fg;
   font: "JetBrains Mono 10";
 }
 
+element selected {
+  background-color: @accent;
+}
+
 element-text selected {
-  text-color: @accent;
+  text-color: #ffffff;
+  font: "JetBrains Mono 10";
 }
 
 element-icon {

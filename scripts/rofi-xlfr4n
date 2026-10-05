@@ -1,32 +1,26 @@
 #!/usr/bin/env bash
 # ⚡ xLFr4n // Kali BSPWM 2026
-# Rofi entrypoint: application launcher and command-palette themes with a frameless fallback.
+# Rofi entrypoint: force the xLFr4n dark layer and keep an emergency fallback.
+
 set -Eeuo pipefail
 
 THEME="$HOME/.config/rofi/launcher.rasi"
-MENU_THEME="$HOME/.config/rofi/menu.rasi"
 FALLBACK="$HOME/.config/rofi/fallback.rasi"
 LOG="$HOME/.cache/xlfr4n-rofi.log"
 
 mkdir -p "$(dirname "$LOG")"
 
-use_menu=0
-for arg in "$@"; do
-  [ "$arg" = "-dmenu" ] && use_menu=1
-done
-[ "$use_menu" -eq 1 ] && [ -s "$MENU_THEME" ] && THEME="$MENU_THEME"
-
 DARK_FALLBACK='
 * {
   background-color: #0b0d10;
   text-color: #ffffff;
-  border-color: transparent;
+  border-color: #ff3344;
 }
 window {
   background-color: #0b0d10;
-  border: 0px;
-  border-color: transparent;
-  border-radius: 16px;
+  border: 1px;
+  border-color: #ff3344;
+  border-radius: 18px;
   padding: 18px;
 }
 mainbox {
@@ -34,9 +28,9 @@ mainbox {
 }
 inputbar {
   background-color: #161b22;
-  border: 0px;
-  border-color: transparent;
-  border-radius: 9px;
+  border: 1px;
+  border-color: #ff3344;
+  border-radius: 8px;
   padding: 9px;
 }
 prompt {
@@ -48,23 +42,19 @@ entry {
   placeholder-color: #8b949e;
 }
 listview {
-  spacing: 5px;
+  spacing: 6px;
   padding: 8px 0px 0px 0px;
 }
 element {
   background-color: transparent;
-  border: 0px;
   border-radius: 8px;
   padding: 9px;
 }
 element selected {
-  background-color: #1b2028;
+  background-color: #ff3344;
 }
 element-text {
   text-color: #ffffff;
-}
-element-text selected {
-  text-color: #ff3344;
 }
 element-icon {
   size: 1.05em;
