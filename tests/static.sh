@@ -284,7 +284,7 @@ check "Autostart uses fixed wallpaper" grep -Fq 'wallpaper" --default' scripts/a
 check "Wallpaper reindex override" grep -Fq 'XLFR4N_WALLPAPER_REINDEX:-0' scripts/wallpaper
 check "Polybar fallback dock uses launch helper" grep -Fq "click-left = dock-launch terminal" config/polybar/config.ini
 check "Kali Lab shortcut uses launch helper" grep -Fq 'xlfr4n-launch "Kali Lab"' config/sxhkd/sxhkdrc
-check "Screenshot menu uses launch helper" grep -Fq 'xlfr4n-launch "Screenshot"' scripts/screenshot-menu
+check "Screenshot menu uses Flameshot" grep -Fq "flameshot gui" scripts/screenshot-menu
 
 # ── Hardening / regression guards (2026-09-30 review) ─────────────────────
 check "syntax brightness-control" bash -n scripts/brightness-control
