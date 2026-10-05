@@ -3,8 +3,8 @@
 # One-shot TARGET entrance animation. Empty target = no module at all.
 set -u
 
-TARGET_FILE="\${HOME}/.config/polybar/target"
-START_FILE="\${HOME}/.cache/xlfr4n-target-boot-ms"
+TARGET_FILE="$HOME/.config/polybar/target"
+START_FILE="$HOME/.cache/xlfr4n-target-boot-ms"
 FG='#f0f3f7'
 
 target="$(cat "$TARGET_FILE" 2>/dev/null || true)"
@@ -24,7 +24,7 @@ fi
 if (( elapsed < 1400 )); then
   frames=('·' '•' '●' '◉' '●' '•')
   index=$(( (elapsed / 220) % \${#frames[@]} ))
-  printf '%%{F%s}%s %s%%{F-}' "$FG" "$label" "\${frames[$index]}"
+  printf '%%{F%s}%s %s%%{F-}\n' "$FG" "$label" "\${frames[$index]}"
 else
-  printf '%%{F%s}%s%%{F-}' "$FG" "$label"
+  printf '%%{F%s}%s%%{F-}\n' "$FG" "$label"
 fi

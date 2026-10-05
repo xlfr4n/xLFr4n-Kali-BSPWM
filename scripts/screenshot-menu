@@ -16,8 +16,12 @@ notify_done() {
   notify-send -u low -t 1500 "⚡ xLFr4n // SCREENSHOT" "$1" >/dev/null 2>&1 || true
 }
 
-choice="$(printf '%s
-'   'REGION       Select region and save'   'FULLSCREEN   Capture full screen and save'   'REGION-CLIP  Copy selected region to clipboard'   'FULL-CLIP    Copy full screen to clipboard'   'FOLDER       Open screenshots folder' |
+choice="$(printf '%s\n' \
+  'REGION       Select region and save' \
+  'FULLSCREEN   Capture full screen and save' \
+  'REGION-CLIP  Copy selected region to clipboard' \
+  'FULL-CLIP    Copy full screen to clipboard' \
+  'FOLDER       Open screenshots folder' |
   rofi-xlfr4n -dmenu -p 'Screenshot' || true)"
 
 case "$choice" in

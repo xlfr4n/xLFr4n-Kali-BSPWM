@@ -13,14 +13,17 @@ mkdir -p "$STATE_DIR" "$(dirname "$INDEX_FILE")"
 
 collect() {
   local root tmp_index
+
   if [ "\${XLFR4N_WALLPAPER_REINDEX:-0}" != "1" ] &&
      [ -s "$INDEX_FILE" ] &&
-     find "$INDEX_FILE" -mmin "-$INDEX_TTL_MINUTES" -print -quit 2>/dev/null | grep -Fqx "$INDEX_FILE"; then
+     find "$INDEX_FILE" -mmin "-$INDEX_TTL_MINUTES" -print -quit 2>/dev/null |
+       grep -Fqx "$INDEX_FILE"; then
     cat "$INDEX_FILE"
     return 0
   fi
 
   tmp_index="$INDEX_FILE.tmp.$$"
+
   for root in \
     "$HOME/.local/share/backgrounds" \
     "$HOME/Pictures/Wallpapers" \
@@ -28,8 +31,14 @@ collect() {
     "/usr/share/backgrounds" \
     "/usr/share/wallpapers"; do
     [ -d "$root" ] || continue
-    find "$root" -type f \\( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \\) -print
-  done | sort -u > "$tmp_index"
+    find "$root" -type f \( \
+      -iname '*.jpg' -o \
+      -iname '*.jpeg' -o \
+      -iname '*.png' -o \
+      -iname '*.webp' \
+    \) -print
+  done |
+    sort -u > "$tmp_index"
 
   mv -f "$tmp_index" "$INDEX_FILE"
   cat "$INDEX_FILE"
@@ -38,7 +47,7 @@ collect() {
 mapfile -t wallpapers < <(
   collect |
     while IFS= read -r image; do
-      [ -f "$image" ] && printf '%s\\n' "$image"
+      [ -f "$image" ] && printf '%s\n' "$image"
     done
 )
 
@@ -50,43 +59,33 @@ fi
 
 current="$(cat "$STATE_FILE" 2>/dev/null || true)"
 
-prepare_wallpaper() {
-  local image="$1"
-  [ -f "$image" ] || return 1
-
-  # Compatibility flag retained for existing installations; both modes are full-bleed.
-  if [ "\${XLFR4N_WALLPAPER_RAW:-0}" = "1" ]; then
-    printf '%s\\n' "$image"
-  else
-    printf '%s\\n' "$image"
-  fi
-}
-
 set_wallpaper() {
-  local image="$1" rendered
-  rendered="$(prepare_wallpaper "$image")"
-  feh --no-fehbg --bg-fill "$rendered"
-  printf '%s\\n' "$image" > "$STATE_FILE"
+  local image="$1"
+
+  [ -f "$image" ] || {
+    echo "Wallpaper not found: $image" >&2
+    return 1
+  }
+
+  feh --no-fehbg --bg-fill "$image"
+  printf '%s\n' "$image" > "$STATE_FILE"
 
   if command -v notify-send >/dev/null 2>&1; then
-    notify-send -u low -t 1000 "xLFr4n // WALLPAPER" "$(basename "$image")" >/dev/null 2>&1 || true
+    notify-send -u low -t 1000 "xLFr4n // WALLPAPER" "$(basename "$image")" \
+      >/dev/null 2>&1 || true
   fi
 
-  printf 'Wallpaper: %s\\n' "$image"
+  printf 'Wallpaper: %s\n' "$image"
 }
 
 case "\${1:-}" in
   --default)
-    if [ -f "$DEFAULT_WALLPAPER" ]; then
-      set_wallpaper "$DEFAULT_WALLPAPER"
-    else
-      echo "Default wallpaper not found: $DEFAULT_WALLPAPER" >&2
-      exit 1
-    fi
+    set_wallpaper "$DEFAULT_WALLPAPER"
     ;;
   --random|"")
     index=$(( $(od -An -N4 -tu4 /dev/urandom) % \${#wallpapers[@]} ))
-    if [ "\${#wallpapers[@]}" -gt 1 ] && [ "\${wallpapers[$index]}" = "$current" ]; then
+    if [ "\${#wallpapers[@]}" -gt 1 ] &&
+       [ "\${wallpapers[$index]}" = "$current" ]; then
       index=$(( (index + 1) % \${#wallpapers[@]} ))
     fi
     set_wallpaper "\${wallpapers[$index]}"
@@ -109,8 +108,10 @@ case "\${1:-}" in
     fi
     ;;
   --set)
-    [ -n "\${2:-}" ] || { echo "Usage: wallpaper --set /path/to/image"; exit 2; }
-    [ -f "$2" ] || { echo "File not found: $2" >&2; exit 2; }
+    [ -n "\${2:-}" ] || {
+      echo "Usage: wallpaper --set /path/to/image" >&2
+      exit 2
+    }
     set_wallpaper "$2"
     ;;
   *)

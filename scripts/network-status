@@ -3,7 +3,7 @@
 # Show physical networking only. VPN state is handled by vpn-status.
 set -u
 
-theme="$(cat "\${HOME}/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
+theme="$(cat "$HOME/.config/theme-state/current" 2>/dev/null || printf 'cyber-red')"
 case "$theme" in
   htb-green) good='#5ee881' ;;
   nord) good='#a3be8c' ;;
@@ -30,4 +30,4 @@ esac
 ip4="$(ip -4 addr show dev "$iface" 2>/dev/null | awk '/inet / {sub(/\\/.*/, "", $2); print $2; exit}')"
 [ -n "$ip4" ] || exit 0
 
-printf '%%{F%s}%s %s%%{F-}\\n' "$good" "$icon" "$ip4"
+printf '%%{F%s}%s %s%%{F-}\n' "$good" "$icon" "$ip4"

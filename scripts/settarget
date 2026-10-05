@@ -3,8 +3,8 @@
 # Set/clear the active engagement target without leaving stale UI behind.
 set -Eeuo pipefail
 
-TARGET_FILE="\${HOME}/.config/polybar/target"
-START_FILE="\${HOME}/.cache/xlfr4n-target-boot-ms"
+TARGET_FILE="$HOME/.config/polybar/target"
+START_FILE="$HOME/.cache/xlfr4n-target-boot-ms"
 mkdir -p "$(dirname "$TARGET_FILE")" "$(dirname "$START_FILE")"
 
 notify_target() {
@@ -14,9 +14,9 @@ notify_target() {
 
 if [[ "\${1:-}" == "--status" ]]; then
   if [[ -s "$TARGET_FILE" ]]; then
-    printf 'TARGET %s\\n' "$(cat "$TARGET_FILE")"
+    printf 'TARGET %s\n' "$(cat "$TARGET_FILE")"
   else
-    printf 'TARGET not set\\n'
+    printf 'TARGET not set\n'
   fi
   exit 0
 fi
@@ -41,9 +41,9 @@ fi
 }
 
 if [[ -n "$name" ]]; then
-  printf '%s · %s\\n' "$value" "$name" > "$TARGET_FILE"
+  printf '%s · %s\n' "$value" "$name" > "$TARGET_FILE"
 else
-  printf '%s\\n' "$value" > "$TARGET_FILE"
+  printf '%s\n' "$value" > "$TARGET_FILE"
 fi
 
 date '+%s%3N' > "$START_FILE"
