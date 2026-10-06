@@ -1,46 +1,26 @@
-# 📚 Kali BSPWM 2026 Documentation
-
-> ⚡ **xLFr4n documentation index · ES + EN**
+# 📚 Kali BSPWM 2026 // Documentation
 
 ## 🇪🇸 Español
 
-| Documento | Para qué sirve |
+La documentación se divide en cuatro zonas: instalación, arquitectura visual, validación de VM y laboratorio red-team.
+
+| Entry | Purpose |
 |---|---|
-| `INSTALL.md` | Instalación nueva, actualización, VM y troubleshooting |
-| `ARCHITECTURE.md` | Capas del sistema y orden de arranque |
-| `FIRST-VM-TEST.md` | Primera validación dentro de un guest Kali |
-| `VMWARE.md` | Integración específica de VMware |
-| `DESKTOP-STYLE.md` | Filosofía visual y componentes del workspace |
-| `FINAL-AUDIT.md` | Auditoría final de capas, funciones y validación |
+| `INSTALL.md` | instalación, actualización y troubleshooting |
+| `ARCHITECTURE.md` | capas y arranque |
+| `FIRST-VM-TEST.md` | primera validación de guest |
+| `DESKTOP-STYLE.md` | contrato visual |
+| `FINAL-AUDIT.md` | auditoría final |
+| `LAB-END-TO-END.md` | recorrido del laboratorio |
+| `VIRTUALBOX-LAB-TOPOLOGY.md` | topología del lab |
+| `SNAPSHOT-RESET-RUNBOOK.md` | snapshots y reset |
 
-La documentación describe el **guest Kali**. El host Windows, VirtualBox o VMware no se modifica automáticamente.
+## 🇺🇸 English
 
-## 🇬🇧 English
+Documentation is split into installation, architecture/UI, VM validation and red-team lab operations.
 
-| Document | Purpose |
-|---|---|
-| `INSTALL.md` | Fresh install, updates, VM setup and troubleshooting |
-| `ARCHITECTURE.md` | System layers and startup order |
-| `FIRST-VM-TEST.md` | First validation inside a Kali guest |
-| `VMWARE.md` | VMware-specific integration |
-| `DESKTOP-STYLE.md` | Visual layer and workspace philosophy |
-| `FINAL-AUDIT.md` | Final audit of layers, functions and validation |
+The table above is the primary map; deeper runbooks live beside these entry points.
 
-Documentation describes the **Kali guest**. Windows, VirtualBox and VMware host settings are not changed automatically.
+**Boundary:** documentation targets the Kali guest. Host Windows, VirtualBox and VMware settings are not silently modified.
 
-**⚡ xLFr4n · Reproducible setup · explicit boundaries · ES + EN**
-
-
-## 🟥 Red Team Lab
-
-~~~text
-LAB-ARCHITECTURE.md
-TOOL-PROFILES.md
-EVIDENCE.md
-REPORTING.md
-OPERATIONS-RUNBOOK.md
-AD-LAB.md
-WEB-LAB.md
-~~~
-
-Estos documentos forman la ruta operativa del laboratorio y están separados de la documentación puramente visual del escritorio.
+**⚡ xLFr4n · Reproducible setup · Explicit boundaries**
