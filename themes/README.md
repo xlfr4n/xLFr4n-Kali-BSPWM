@@ -1,58 +1,35 @@
-# ⚡ xlfr4n // Themes
-
-> 🎨 **Same system. Different mood.**
+# 🎨 xLFr4n // Themes
 
 ## 🇪🇸 Español
 
-Los temas son deliberadamente ligeros. No son un segundo instalador ni una dependencia obligatoria: cambian acentos de **Polybar, Kitty, Rofi y Dunst**, mientras Zsh lee el estado activo para adaptar el prompt. El color de tema no vuelve a introducir marcos de ventana: los contornos de las superficies permanecen neutrales.
+Los temas cambian acentos de Polybar, Ghostty, Rofi, Dunst y el prompt. **Ghostty** es el terminal gráfico; Kitty no forma parte del runtime.
 
-### 🌈 Temas actuales
+Temas actuales:
+- 🔴 `cyber-red` — firma principal
+- 🟢 `htb-green` — variante lab
+- ❄️ `nord` — variante fría
+- 🟣 `purple` — variante experimental
 
-- 🔴 `cyber-red` — firma principal de xlfr4n.
-- 🟢 `htb-green` — estilo laboratorio/HTB.
-- ❄️ `nord` — variante fría y discreta.
-- 🟣 `purple` — variante más experimental.
-
-### ⌨️ Selector
-
-```bash
-theme-switch
+~~~bash
 theme-switch --current
 theme-switch --list
-theme-switch --random
 theme-switch cyber-red
-```
+theme-switch --random
+~~~
 
-`pywal16` es opcional. El escritorio no depende de él para funcionar.
+`pywal16` es opcional y no es un requisito del escritorio.
 
-## 🇬🇧 English
+## 🇺🇸 English
 
-Themes are intentionally lightweight. They are not a second installer or a mandatory dependency: they change **Polybar, Kitty, Rofi and Dunst** accents, while Zsh reads the active state and adapts the prompt.
+Themes change accents across Polybar, Ghostty, Rofi, Dunst and the shell prompt. **Ghostty** is the graphical terminal; Kitty is not part of the runtime.
 
-### 🌈 Current themes
+Current themes: `cyber-red`, `htb-green`, `nord` and `purple`. `pywal16` is optional.
 
-- 🔴 `cyber-red` — the primary xlfr4n signature.
-- 🟢 `htb-green` — lab/HTB inspired.
-- ❄️ `nord` — cool and restrained.
-- 🟣 `purple` — more experimental.
-
-### ⌨️ Selector
-
-```bash
-theme-switch
+~~~bash
 theme-switch --current
 theme-switch --list
-theme-switch --random
 theme-switch cyber-red
-```
+theme-switch --random
+~~~
 
-`pywal16` remains optional; the desktop core does not depend on it.
-
----
-
-<p align="center"><strong>⚡ xlfr4n</strong> · Theme the desktop. Keep the system boring.</p>
-
-
-## 🍎 Desktop skin
-
-Every theme keeps the unified xLFr4n workspace shell: transparent top rail, floating dock, application launcher and window overview. Switching themes refreshes Polybar and the dock together when possible.
+**⚡ xLFr4n · Theme the mood, keep the system stable**

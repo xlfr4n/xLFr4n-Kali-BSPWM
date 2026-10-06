@@ -1,25 +1,21 @@
 # 🎯 xLFr4n Floating Dock
 
-> ⚡ **Real application launchers, real icons, zero taskbar noise.**
+> **Real launchers · real icons · no taskbar noise.**
 
 ## 🇪🇸 Español
 
-El dock principal utiliza **Tint2 en modo launcher-only** cuando está disponible en Kali. No muestra taskbar, batería ni bandeja: solo iconos flotantes de las aplicaciones del workspace.
+Tint2 es el dock principal cuando está disponible. Opera en modo **launcher-only**: no pretende ser una taskbar completa.
 
-Cada icono corresponde a una aplicación y abre el programa; cuando detecta una ventana existente, el helper `dock-launch` intenta enfocarla en lugar de duplicarla.
+Los launchers usan archivos `.desktop` y el helper `dock-launch` intenta enfocar una ventana existente antes de duplicarla.
 
-Las aplicaciones se cargan mediante archivos `.desktop` del usuario y el tema de iconos **Papirus-Dark** cuando está disponible.
+Plank queda como fallback cuando Tint2 no puede utilizarse.
 
-Si Tint2 no está disponible en el snapshot de Kali, el helper `dock` mantiene una ruta de respaldo con Plank o Polybar.
+## 🇺🇸 English
 
-## 🇬🇧 English
+Tint2 is the preferred dock when available. It runs in **launcher-only** mode instead of behaving like a full taskbar.
 
-The main dock uses **Tint2 in launcher-only mode** when available in Kali. It deliberately hides the taskbar, battery and system tray and keeps only floating application icons.
+Launchers use `.desktop` files and `dock-launch` tries to focus an existing window before creating another process.
 
-Each icon maps to an application and launches it; when an existing window is detected, the `dock-launch` helper tries to focus it instead of creating another instance.
+Plank remains the fallback when Tint2 is unavailable.
 
-Launchers use the user's `.desktop` files and **Papirus-Dark** when available.
-
-If Tint2 is unavailable in the current Kali snapshot, `dock` falls back to Plank or the native Polybar dock.
-
-**⚡ xLFr4n · floating apps · dark glass · focused workflow**
+**⚡ xLFr4n · Floating apps · Focused workflow**
