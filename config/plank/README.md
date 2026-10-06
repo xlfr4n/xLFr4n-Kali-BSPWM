@@ -2,14 +2,14 @@
 
 ## 🇪🇸 Español
 
-Plank es un **fallback** opcional. El backend preferido es Tint2 launcher-only; Plank entra cuando Tint2 no está disponible.
+Plank es el **fallback** opcional del dock. Tint2 launcher-only es el backend preferido.
 
-No se usan varios docks simultáneamente: el helper `dock` decide el backend y detiene los anteriores antes de arrancar el elegido.
+El helper `dock` evita mantener varios backends activos a la vez y decide qué superficie de lanzamiento usar.
 
-## 🇬🇧 English
+## 🇺🇸 English
 
-Plank is an optional **fallback**. Tint2 launcher-only is the preferred backend; Plank is selected when Tint2 is unavailable.
+Plank is the optional **fallback** dock. Tint2 launcher-only is the preferred backend.
 
-Multiple dock backends are not intended to run together: the `dock` helper stops previous backends before starting the selected one.
+The `dock` helper keeps the launcher layer single-backend and selects the available implementation.
 
-**⚡ xLFr4n · Float the workspace, keep the system lean.**
+**⚡ xLFr4n · Lean surfaces · Clear ownership**
