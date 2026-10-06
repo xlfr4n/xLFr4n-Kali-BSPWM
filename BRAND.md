@@ -1,33 +1,43 @@
 # ⚡ xLFr4n // Project Signature
 
-> 🐉 **Own the terminal. Own the desktop. Keep the system reproducible.**
+> **Own the terminal. Own the desktop. Keep the system reproducible.**
 
 ## 🇪🇸 Español
 
-**Kali BSPWM 2026** es el entorno Linux personal de **xlfr4n**: oscuro, rápido, modular y construido para convertir un Kali normal en un escritorio reconocible como parte del mismo laboratorio.
+**Kali BSPWM 2026** es la capa de escritorio Linux de **xLFr4n** para Kali. La identidad combina un sistema ligero, información útil, Ghostty, BSPWM, shell tooling y un laboratorio de red-team reproducible.
 
-La identidad visual combina **⚡ xlfr4n // Kali**, cyber red, JetBrains Mono, Polybar, Rofi, Ghostty, tmux, Zsh, Dunst, BSPWM y wallpapers. La personalización alcanza desde el selector de sesión hasta el prompt del terminal, los controles de Ghostty, la barra superior, los menús de energía y los indicadores del escritorio.
+**Identidad mostrada:** ⚡ xLFr4n  
+**Handle técnico:** xlfr4n  
+**Base:** Kali · X11 · BSPWM
 
-La regla técnica sigue siendo simple: compatibilidad, legibilidad y reversibilidad primero; estética agresiva después.
+### Principios
 
-**Identidad mostrada:** **xLFr4n** · **GitHub handle:** <code>xlfr4n</code> · Kali · BSPWM · X11 · cybersecurity
-
-## 🇬🇧 English
-
-**Kali BSPWM 2026** is **xlfr4n's** personal Linux desktop layer: dark, fast, modular and built to turn a standard Kali installation into a recognizable part of the same lab.
-
-The visual identity combines **⚡ xlfr4n // Kali**, cyber red, JetBrains Mono, Polybar, Rofi, Ghostty, Zsh, Dunst, BSPWM and wallpapers. Personalization reaches from the session selector to the terminal prompt, Ghostty controls, top bar, power menus and desktop status indicators.
-
-The engineering rule stays simple: compatibility, readability and reversibility first; aggressive aesthetics second.
-
-**Display identity:** **xLFr4n** · **GitHub handle:** <code>xlfr4n</code> · Kali · BSPWM · X11 · cybersecurity
-
----
-
-<p align="center"><strong>⚡ xLFr4n</strong> · Terminal first · Desktop owned · Reproducible always</p>
+- compatibilidad antes que decoración;
+- información antes que ruido;
+- rojo como acento, nunca como obligación visual;
+- backups antes de modificar;
+- cambios reversibles y verificables;
+- el guest controla su sesión; el host queda fuera.
 
 
-## Canonical ecosystem standard
+## 🇺🇸 English
+
+**Kali BSPWM 2026** is the xLFr4n Linux desktop layer for Kali. The identity combines a lean system, useful status information, Ghostty, BSPWM, shell tooling and a reproducible red-team lab.
+
+**Display identity:** ⚡ xLFr4n  
+**Technical handle:** xlfr4n  
+**Base:** Kali · X11 · BSPWM
+
+### Principles
+
+- compatibility before decoration;
+- information before noise;
+- red as an accent, never as a mandatory frame;
+- backups before overwrite;
+- reversible, verifiable changes;
+- the guest owns its session; the host stays outside.
+
+## 🔗 Ecosystem
 
 This project follows the shared [xLFr4n ecosystem standard](https://github.com/xlfr4n/xLFr4n/blob/main/ECOSYSTEM.md).
 
