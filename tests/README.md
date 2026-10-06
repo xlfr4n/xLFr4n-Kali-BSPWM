@@ -1,31 +1,25 @@
-# 🧪 Tests
-
-> ⚡ **xLFr4n verification layer · ES + EN**
+# 🧪 Tests // xLFr4n Verification
 
 ## 🇪🇸 Español
 
-Los tests comprueban sintaxis Bash, archivos obligatorios, atajos, integración VM, composición visual y superficies críticas sin modificar el sistema.
+La suite comprueba sintaxis Bash, archivos obligatorios, configuración, atajos, superficies críticas y reglas estáticas sin exigir una sesión gráfica completa.
 
-Ejecuta:
-
-```bash
+~~~bash
 bash tests/static.sh
 bash tests/shellcheck.sh
-```
+~~~
 
-CI añade validación de la sintaxis del theme Rofi mediante una pantalla virtual y ejecuta ShellCheck.
+CI mantiene verificaciones adicionales donde una prueba visual o virtualizada aporta valor.
 
-## 🇬🇧 English
+## 🇺🇸 English
 
-The tests validate Bash syntax, required files, shortcuts, VM integration, visual composition and critical configuration surfaces without changing the system.
+The suite checks Bash syntax, required files, configuration surfaces, shortcuts and static invariants without requiring a full graphical session.
 
-Run:
-
-```bash
+~~~bash
 bash tests/static.sh
 bash tests/shellcheck.sh
-```
+~~~
 
-CI also validates the Rofi theme through a virtual display and runs ShellCheck.
+CI adds virtualized validation where it improves confidence.
 
-**⚡ xLFr4n · Test the boundary, not the illusion**
+**⚡ xLFr4n · Verify the boundary, not the illusion**
