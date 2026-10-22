@@ -7,7 +7,7 @@
 <p>
   <a href="https://github.com/xlfr4n/xLFr4n-Kali-BSPWM/actions"><img src="https://img.shields.io/github/actions/workflow/status/xlfr4n/xLFr4n-Kali-BSPWM/shellcheck.yml?label=CI&logo=github&style=for-the-badge" alt="Estado de CI"></a>
   <a href="https://www.kali.org/"><img src="https://img.shields.io/badge/Kali-Linux-557C94?style=for-the-badge&logo=kalilinux&logoColor=white" alt="Kali Linux"></a>
-  <a href="https://github.com/baskerville/bspwm"><img src="https://img.shields.io/badge/BSPWM-X11-252A34?style=for-the-badge" alt="BSPWM en X11"></a>
+  <a href="https://github.com/baskerville/bspwm"><img src="https://img.shields.io/badge/BSPWM-X11-FF3344?style=for-the-badge&labelColor=111318" alt="BSPWM en X11"></a>
 </p>
 
 <sub>X11 · BSPWM · SXHKD · Polybar · Rofi · Ghostty · tmux · Picom · Dunst</sub>
@@ -197,7 +197,7 @@ Este repositorio configura un escritorio y un laboratorio. Realiza prácticas de
 <div align="center">
 
 **Terminal primero · Escritorio bajo control · Configuración reproducible**  
-<sub>⚡ xLFr4n</sub>
+<sub>⚡ xLFr4n · Cyber-red / charcoal · Linux y laboratorio</sub>
 
 </div>
 
