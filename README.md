@@ -5,16 +5,16 @@
 > Personal, reproducible and VM-friendly desktop layer by **xLFr4n**.
 
 <p align="center">
-[![CI](https://img.shields.io/github/actions/workflow/status/xlfr4n/xLFr4n-Kali-BSPWM/shellcheck.yml?label=CI&logo=github)](https://github.com/xlfr4n/xLFr4n-Kali-BSPWM/actions) 
-[![Kali](https://img.shields.io/badge/Kali-Linux-557C94?style=flat-square&logo=kalilinux&logoColor=white)](https://www.kali.org/) 
-[![BSPWM](https://img.shields.io/badge/BSPWM-X11-111827?style=flat-square)](https://github.com/baskerville/bspwm)
+  <a href="https://github.com/xlfr4n/xLFr4n-Kali-BSPWM/actions"><img src="https://img.shields.io/github/actions/workflow/status/xlfr4n/xLFr4n-Kali-BSPWM/shellcheck.yml?label=CI&logo=github" alt="Estado de CI"></a>
+  <a href="https://www.kali.org/"><img src="https://img.shields.io/badge/Kali-Linux-557C94?style=flat-square&logo=kalilinux&logoColor=white" alt="Kali Linux"></a>
+  <a href="https://github.com/baskerville/bspwm"><img src="https://img.shields.io/badge/BSPWM-X11-111827?style=flat-square" alt="BSPWM para X11"></a>
 </p>
 
 ## 🇪🇸 Español
 
 ### 🎯 Qué es
 
-Kali BSPWM 2026 es la capa de escritorio personal de **xLFr4n** para Kali Linux. Mantiene una base ligera sobre X11 + BSPWM y añade una interfaz operativa alrededor de terminal, ventanas, lanzadores, notificaciones, workspace, target y herramientas de laboratorio.
+Kali BSPWM 2026 es mi configuración de escritorio para Kali Linux. Parte de X11 y BSPWM y reúne terminal, ventanas, lanzadores, notificaciones, espacios de trabajo y utilidades para laboratorios. La idea es que la sesión diaria sea cómoda y repetible, también dentro de una máquina virtual.
 
 El proyecto está pensado para una sesión Kali real, especialmente dentro de VirtualBox o VMware. No intenta sustituir el sistema base ni modificar automáticamente el host.
 
@@ -124,7 +124,7 @@ git pull --ff-only origin main
 reboot
 ~~~
 
-The installer creates a timestamped backup before replacing user configuration.
+The installer creates a timestamped backup before replacing user configuration. Review the backup and the installer's output before removing or restoring anything manually.
 
 ---
 
